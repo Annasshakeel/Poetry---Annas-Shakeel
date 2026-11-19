@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحریر: انس شکیل | Urdu Poetry</title>
+    <!-- Tailwind CSS for layout and responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Noto Nastaliq Urdu for authentic calligraphy & Cormorant Garamond/Inter for English signature -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,500&family=Inter:wght@400;500&family=Noto+Nastaliq+Urdu:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Nastaliq Typography & Atmospheric Styling */
+        :root {
+            --gold-primary: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-muted: rgba(212, 175, 55, 0.25);
+            --obsidian-bg: #0a0a0c;
+            --obsidian-card: #121216;
+        }
+
+        body {
+            background-color: var(--obsidian-bg);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 85% 90%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+            color: #f4f1ea;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Light Parchment Mode Support */
+        body.parchment-mode {
+            background-color: #f7f3e8;
+            background-image: radial-gradient(circle at 50% 0%, rgba(166, 124, 0, 0.08) 0%, transparent 65%);
+            color: #1c1915;
+        }
+
+        .poetry-card {
+            background: linear-gradient(165deg, rgba(22, 22, 28, 0.95) 0%, rgba(12, 12, 15, 0.98) 100%);
+            border: 1px solid var(--gold-muted);
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                inset 0 0 30px rgba(212, 175, 55, 0.03);
+            transition: all 0.4s ease;
+        }
+
+        body.parchment-mode .poetry-card {
+            background: linear-gradient(165deg, #fffdf9 0%, #f4eee1 100%);
+            border: 1px solid rgba(154, 114, 24, 0.3);
+            box-shadow: 
+                0 20px 40px -15px rgba(65, 50, 20, 0.15),
+                inset 0 0 30px rgba(154, 114, 24, 0.04);
+        }
+
+        /* Nastaliq Line Height & Spacing Adjustments (Crucial for Urdu diacritics/vertical ligatures) */
+        .nastaliq-verse {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            line-height: 2.65;
+            word-spacing: 2px;
+            transition: font-size 0.3s ease;
+        }
+
+        .gold-text {
+            color: var(--gold-primary);
+        }
+
+        body.parchment-mode .gold-text {
+            color: #966f14;
+        }
+
+        .english-font {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .ui-font {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Subtle fade-in animation for couplets */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-couplet {
+            opacity: 0;
+            animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.65s; }
+        .delay-4 { animation-delay: 0.9s; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 selection:bg-amber-500/30 selection:text-amber-200">
+
+    <!-- Top Floating Utility Bar (LTR for controls clarity) -->
+    <div dir="ltr" class="w-full max-w-3xl flex flex-wrap items-center justify-between gap-3 mb-5 px-2 ui-font text-xs sm:text-sm">
+        <div class="flex items-center gap-2">
+            <!-- Font Size Controls -->
+            <button onclick="adjustFontSize(-0.12)" title="Decrease Font Size" class="px-3 py-1.5 rounded-full border border-amber-500/25 bg-neutral-900/70 text-amber-200/80 hover:border-amber-400 hover:text-amber-300 transition active:scale-95">
+                A-
+            </button>
+            <button onclick="adjustFontSize(0.12)" title="Increase Font Size" class="px-3 py-1.5 rounded-full border border-amber-500/25 bg-neutral-900/70 text-amber-200/80 hover:border-amber-400 hover:text-amber-300 transition active:scale-95">
+                A+
+            </button>
+            <!-- Theme Toggle -->
+            <button id="themeBtn" onclick="toggleTheme()" class="px-3.5 py-1.5 rounded-full border border-amber-500/25 bg-neutral-900/70 text-amber-200/80 hover:border-amber-400 hover:text-amber-300 transition flex items-center gap-1.5 active:scale-95">
+                <svg id="themeIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+                <span id="themeText">Parchment</span>
+            </button>
+        </div>
+
+        <!-- Copy Poetry Button -->
+        <button onclick="copyPoetry()" class="px-4 py-1.5 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20 hover:border-amber-400 transition flex items-center gap-2 active:scale-95 shadow-sm">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            <span>کاپی کریں / Copy Text</span>
+        </button>
+    </div>
+
+    <!-- Main Ornamental Poetry Frame -->
+    <main class="poetry-card relative w-full max-w-3xl rounded-2xl p-6 sm:p-12 md:p-16 overflow-hidden">
+        
+        <!-- Inner Thin Ornamental Frame -->
+        <div class="pointer-events-none absolute inset-3 sm:inset-5 border border-amber-500/20 rounded-xl"></div>
+
+        <!-- Four Decorative Islamic/Mughal Corner Filigrees (SVG) -->
+        <!-- Top Right -->
+        <svg class="pointer-events-none absolute top-3 right-3 sm:top-5 sm:right-5 w-10 h-10 sm:w-14 sm:h-14 gold-text opacity-70" viewBox="0 0 60 60" fill="none">
+            <path d="M58 2H20C10 2 2 10 2 20V58" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M58 8H24C15 8 8 15 8 24V58" stroke="currentColor" stroke-width="0.7" stroke-dasharray="2 2"/>
+            <circle cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1"/>
+            <path d="M2 2L11 11" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <!-- Top Left -->
+        <svg class="pointer-events-none absolute top-3 left-3 sm:top-5 sm:left-5 w-10 h-10 sm:w-14 sm:h-14 gold-text opacity-70 -scale-x-100" viewBox="0 0 60 60" fill="none">
+            <path d="M58 2H20C10 2 2 10 2 20V58" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M58 8H24C15 8 8 15 8 24V58" stroke="currentColor" stroke-width="0.7" stroke-dasharray="2 2"/>
+            <circle cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1"/>
+            <path d="M2 2L11 11" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <!-- Bottom Right -->
+        <svg class="pointer-events-none absolute bottom-3 right-3 sm:bottom-5 sm:right-5 w-10 h-10 sm:w-14 sm:h-14 gold-text opacity-70 -scale-y-100" viewBox="0 0 60 60" fill="none">
+            <path d="M58 2H20C10 2 2 10 2 20V58" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M58 8H24C15 8 8 15 8 24V58" stroke="currentColor" stroke-width="0.7" stroke-dasharray="2 2"/>
+            <circle cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1"/>
+            <path d="M2 2L11 11" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <!-- Bottom Left -->
+        <svg class="pointer-events-none absolute bottom-3 left-3 sm:bottom-5 sm:left-5 w-10 h-10 sm:w-14 sm:h-14 gold-text opacity-70 scale-x-[-1] scale-y-[-1]" viewBox="0 0 60 60" fill="none">
+            <path d="M58 2H20C10 2 2 10 2 20V58" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M58 8H24C15 8 8 15 8 24V58" stroke="currentColor" stroke-width="0.7" stroke-dasharray="2 2"/>
+            <circle cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1"/>
+            <path d="M2 2L11 11" stroke="currentColor" stroke-width="1"/>
+        </svg>
+
+        <!-- Header Crest Ornament -->
+        <header class="text-center mb-8 sm:mb-12 relative z-10">
+            <div class="inline-flex items-center justify-center gap-3 gold-text opacity-85 mb-2">
+                <span class="h-[1px] w-12 sm:w-20 bg-gradient-to-l from-amber-500/60 to-transparent"></span>
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L14.8 8.8L22 9.5L16.5 14.2L18.2 21.3L12 17.5L5.8 21.3L7.5 14.2L2 9.5L9.2 8.8L12 2Z" opacity="0.85"/>
+                </svg>
+                <span class="h-[1px] w-12 sm:w-20 bg-gradient-to-r from-amber-500/60 to-transparent"></span>
+            </div>
+            <p class="text-xs sm:text-sm tracking-widest gold-text opacity-80 mt-1">انتخابِ کلام</p>
+        </header>
+
+        <!-- Poetry Couplets Container -->
+        <article id="poetryContent" class="relative z-10 text-center space-y-8 sm:space-y-11" style="font-size: 1.35rem;">
+            
+            <!-- Couplet 1 -->
+            <section class="animate-couplet delay-1">
+                <p class="nastaliq-verse font-normal">
+                    جیت لو تم جو چاہو، پر یاد رکھنا جو کھویا ہے اس کا کوئی بدل نہیں،
+                </p>
+                <p class="nastaliq-verse font-normal">
+                    وقت بدلنے سے لوگ پرانے نہیں ہوتے، نظر بدلنے سے چہرے نئے لگتے ہیں۔
+                </p>
+            </section>
+
+            <!-- Ornamental Divider -->
+            <div class="animate-couplet delay-2 flex items-center justify-center gap-3 gold-text opacity-50">
+                <span class="h-[1px] w-10 bg-current"></span>
+                <span class="text-xs">❖</span>
+                <span class="h-[1px] w-10 bg-current"></span>
+            </div>
+
+            <!-- Couplet 2 -->
+            <section class="animate-couplet delay-2">
+                <p class="nastaliq-verse font-normal">
+                    میری ہار یا گرنے سے تمہاری جیت ہوتی ہو تو میں خود ہی جھک جاؤں،
+                </p>
+                <p class="nastaliq-verse font-normal">
+                    پر سوچنے والی بات یہ ہے کہ جھکایا کسے جاتا ہے، جو خود زمین پر ہو یا جو آسمان میں؟
+                </p>
+            </section>
+
+            <!-- Ornamental Divider -->
+            <div class="animate-couplet delay-3 flex items-center justify-center gap-3 gold-text opacity-50">
+                <span class="h-[1px] w-10 bg-current"></span>
+                <span class="text-xs">❖</span>
+                <span class="h-[1px] w-10 bg-current"></span>
+            </div>
+
+            <!-- Couplet 3 -->
+            <section class="animate-couplet delay-3">
+                <p class="nastaliq-verse font-normal">
+                    محبت کی تھی تو پوری شدت سے کی، پر کسی کے آگے ہاتھ پھیلانا میری فطرت نہیں،
+                </p>
+                <p class="nastaliq-verse font-normal">
+                    ایک طرفہ چاہت میں بھی اپنا وزن قائم رکھا، کیونکہ خاموشی بھی ایک طاقت ہوتی ہے۔
+                </p>
+            </section>
+
+        </article>
+
+        <!-- Signature Attribution Footer -->
+        <footer class="animate-couplet delay-4 relative z-10 mt-12 sm:mt-16 pt-8 border-t border-amber-500/20 flex flex-col items-center justify-center text-center">
+            <div class="gold-text text-xl sm:text-2xl font-semibold tracking-wide mb-2" style="line-height: 2.2;">
+                تحریر: انس شکیل
+            </div>
+            <div dir="ltr" class="english-font italic text-base sm:text-lg tracking-wider opacity-80">
+                (Written by Annas Shakeel)
+            </div>
+            <div dir="ltr" class="mt-3 inline-flex items-center gap-2.5 px-4 py-1 rounded-full border border-amber-500/25 bg-amber-500/5 gold-text english-font text-sm sm:text-base tracking-widest opacity-90">
+                <span>✦</span>
+                <span>20-December-2021</span>
+                <span>✦</span>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Custom Toast Notification Box (No alert() used) -->
+    <div id="toast" dir="rtl" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-20 opacity-0 pointer-events-none transition-all duration-300 z-50 px-6 py-3 rounded-full bg-neutral-900 border border-amber-500/50 text-amber-200 shadow-2xl flex items-center gap-3">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span class="text-sm sm:text-base" style="line-height: 1.8;">کلام کاپی کر لیا گیا ہے (Copied to clipboard)</span>
+    </div>
+
+    <script>
+        // Current base font size in rem
+        let currentFontSize = window.innerWidth < 640 ? 1.15 : 1.45;
+        const poetryContainer = document.getElementById('poetryContent');
+
+        // Initialize responsive font size on load
+        window.addEventListener('DOMContentLoaded', () => {
+            poetryContainer.style.fontSize = `${currentFontSize}rem`;
+        });
+
+        /**
+         * Adjusts the Nastaliq verse font size smoothly within safe bounds
+         */
+        function adjustFontSize(delta) {
+            currentFontSize = Math.min(Math.max(currentFontSize + delta, 0.95), 2.1);
+            poetryContainer.style.fontSize = `${currentFontSize.toFixed(2)}rem`;
+        }
+
+        /**
+         * Toggles between Dark Obsidian and Warm Parchment themes
+         */
+        function toggleTheme() {
+            const body = document.body;
+            const themeText = document.getElementById('themeText');
+            const themeBtn = document.getElementById('themeBtn');
+            
+            body.classList.toggle('parchment-mode');
+            const isParchment = body.classList.contains('parchment-mode');
+            
+            themeText.textContent = isParchment ? 'Obsidian' : 'Parchment';
+            if (isParchment) {
+                themeBtn.classList.remove('bg-neutral-900/70', 'text-amber-200/80');
+                themeBtn.classList.add('bg-amber-900/10', 'text-amber-900', 'border-amber-800/30');
+            } else {
+                themeBtn.classList.add('bg-neutral-900/70', 'text-amber-200/80');
+                themeBtn.classList.remove('bg-amber-900/10', 'text-amber-900', 'border-amber-800/30');
+            }
+        }
+
+        /**
+         * Copies the formatted Urdu poetry and attribution to the clipboard
+         */
+        function copyPoetry() {
+            const textToCopy = `جیت لو تم جو چاہو، پر یاد رکھنا جو کھویا ہے اس کا کوئی بدل نہیں،
+وقت بدلنے سے لوگ پرانے نہیں ہوتے، نظر بدلنے سے چہرے نئے لگتے ہیں۔
+
+میری ہار یا گرنے سے تمہاری جیت ہوتی ہو تو میں خود ہی جھک جاؤں،
+پر سوچنے والی بات یہ ہے کہ جھکایا کسے جاتا ہے، جو خود زمین پر ہو یا جو آسمان میں؟
+
+محبت کی تھی تو پوری شدت سے کی، پر کسی کے آگے ہاتھ پھیلانا میری فطرت نہیں،
+ایک طرفہ چاہت میں بھی اپنا وزن قائم رکھا، کیونکہ خاموشی بھی ایک طاقت ہوتی ہے۔
+
+تحریر: انس شکیل (Written by Annas Shakeel) — 20-December-2021`;
+
+            // Create temporary textarea for reliable iFrame-compatible copying
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            tempTextArea.style.position = 'fixed';
+            tempTextArea.style.opacity = '0';
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                console.error('Copy failed:', err);
+            } finally {
+                document.body.removeChild(tempTextArea);
+            }
+        }
+
+        /**
+         * Displays a smooth confirmation toast message
+         */
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 2800);
+        }
+    </script>
+</body>
+</html>
